@@ -1,7 +1,7 @@
 from http.server import SimpleHTTPRequestHandler
 import socketserver
 import json
-from crypto import permutation_encrypt
+from PermutationCipherServer.crypto import permutation_encrypt
 
 allowed_origin = 'http://localhost:3000'
 
