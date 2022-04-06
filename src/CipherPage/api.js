@@ -1,4 +1,4 @@
-const serverUrl = 'http://localhost:8000';
+const serverUrl = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000';
 
 const makeRequest = async (url, options) => {
   const fullUrl = `${serverUrl}${url}`;
