@@ -4,6 +4,7 @@ import TextField from './TextField';
 import Button from './Button';
 import { encryptPasswordRequest } from './api';
 import { validatePassword, validateEncryptionKey } from './cipherFormValidators';
+import { saveCipherFormState, loadCipherFormState } from './cipherFormLocalStorage';
 
 const CipherForm = () => {
   const [password, setPassword] = useState('');
@@ -11,6 +12,30 @@ const CipherForm = () => {
   const [encryptedPassword, setEncryptedPassword] = useState(null);
   const [encryptionRequestFailed, setEncryptionRequestFailed] = useState(false);
   const [wasFormSubmitted, setWasFormSubmitted] = useState(false);
+
+  const saveStateToLocalStorage = () => {
+    saveCipherFormState({
+      password,
+      encryptionKey,
+      encryptedPassword,
+    });
+  };
+
+  const loadStateFromLocalStorage = () => {
+    const state = loadCipherFormState();
+    if (!state) return;
+    setPassword(state.password);
+    setEncryptionKey(state.encryptionKey);
+    setEncryptedPassword(state.encryptedPassword);
+  };
+
+  useEffect(() => {
+    loadStateFromLocalStorage();
+  }, []);
+
+  useEffect(() => {
+    saveStateToLocalStorage();
+  }, [encryptedPassword]);
 
   const passwordValidationError = useMemo(
     () => validatePassword(password),
