@@ -13,7 +13,7 @@ const CipherForm = () => {
   };
 
   return (
-    <form className="cipher-form" onSubmit={handleSubmit}>
+    <form aria-label="password encryption form" className="cipher-form" onSubmit={handleSubmit}>
       <TextField label="Password" placeholder="Password" onChange={handlePasswordChange} />
       <TextField label="Encryption Key" placeholder="Encryption key" onChange={handleKeyChange} />
       <Button type="submit">Encrypt</Button>
