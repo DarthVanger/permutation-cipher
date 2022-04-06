@@ -3,7 +3,7 @@ import './CipherForm.css';
 import TextField from './TextField';
 import Button from './Button';
 import { encryptPasswordRequest } from './api';
-import useCipherFormValidation from './useCipherFormValidation';
+import { validatePassword, validateEncryptionKey } from './cipherFormValidators';
 
 const CipherForm = () => {
   const [password, setPassword] = useState('');
@@ -12,10 +12,15 @@ const CipherForm = () => {
   const [encryptionRequestFailed, setEncryptionRequestFailed] = useState(false);
   const [wasFormSubmitted, setWasFormSubmitted] = useState(false);
 
-  const { passwordValidationError, encryptionKeyValidationError } = useCipherFormValidation({
-    password,
-    encryptionKey,
-  });
+  const passwordValidationError = useMemo(
+    () => validatePassword(password),
+    [password],
+  );
+
+  const encryptionKeyValidationError = useMemo(
+    () => validateEncryptionKey(encryptionKey),
+    [encryptionKey],
+  );
 
   const isFormValid = !passwordValidationError && !encryptionKeyValidationError;
 
