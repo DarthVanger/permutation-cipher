@@ -1,0 +1,13 @@
+.text-field {
+  display: block;
+  margin: 1em;
+  text-align: left;
+}
+
+.text-field input {
+  display: block;
+  width: 100%;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  font-size: 1em;
+}
