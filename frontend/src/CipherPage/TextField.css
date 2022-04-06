@@ -1,10 +1,13 @@
 .text-field {
-  display: block;
   margin: 1em;
   text-align: left;
 }
 
-.text-field input {
+.text-field-label {
+  display: block;
+}
+
+.text-field-label input {
   display: block;
   width: 100%;
   margin: 0.5em 0;
