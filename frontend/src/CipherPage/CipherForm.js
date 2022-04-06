@@ -3,55 +3,19 @@ import './CipherForm.css';
 import TextField from './TextField';
 import Button from './Button';
 import { encryptPasswordRequest } from './api';
+import useCipherFormValidation from './useCipherFormValidation';
 
 const CipherForm = () => {
   const [password, setPassword] = useState('');
   const [encryptionKey, setEncryptionKey] = useState('');
   const [encryptedPassword, setEncryptedPassword] = useState(null);
   const [encryptionRequestFailed, setEncryptionRequestFailed] = useState(false);
-  const [passwordValidationError, setPasswordValidationError] = useState('');
-  const [encryptionKeyValidationError, setEncryptionKeyValidationError] = useState('');
   const [wasFormSubmitted, setWasFormSubmitted] = useState(false);
 
-  const validatePassword = (password) => {
-    if (password === '') {
-      return 'Please enter password';
-    }
-    if (!/^[a-zA-Z]+$/.test(password)) {
-      return 'Password should contain only letters of the alphabet';
-    }
-  };
-
-  const validateEncryptionKey = (encryptionKey) => {
-    const NUMBER_OF_ALPHABET_LETTERS = 26;
-
-    if (encryptionKey === '') {
-      return 'Please enter encryption key';
-    }
-    if (!/^[a-zA-Z]+$/.test(encryptionKey)) {
-      return 'Encryption key should contain only letters of the alphabet';
-    }
-    if (encryptionKey.length !== NUMBER_OF_ALPHABET_LETTERS) {
-      return `Encryption key should have exactly ${NUMBER_OF_ALPHABET_LETTERS} letters`;
-    }
-
-    const uniqueLetters = [...new Set(Array.from(encryptionKey))];
-
-    if (uniqueLetters.length !== encryptionKey.length) {
-      return 'Encryption key should contain only unique letters';
-    }
-  };
-
-  const validateForm = () => {
-    if (!wasFormSubmitted) return;
-
-    setPasswordValidationError(validatePassword(password));
-    setEncryptionKeyValidationError(validateEncryptionKey(encryptionKey));
-  };
-
-  useEffect(() => {
-    validateForm();
-  }, [password, encryptionKey, wasFormSubmitted]);
+  const { passwordValidationError, encryptionKeyValidationError } = useCipherFormValidation({
+    password,
+    encryptionKey,
+  });
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -82,14 +46,14 @@ const CipherForm = () => {
         placeholder="Password"
         onChange={handlePasswordChange}
         value={password}
-        error={passwordValidationError}
+        error={wasFormSubmitted && passwordValidationError}
       />
       <TextField
         label="Encryption Key"
         placeholder="Encryption key"
         onChange={handleEcnryptionKeyChange}
         value={encryptionKey}
-        error={encryptionKeyValidationError}
+        error={wasFormSubmitted && encryptionKeyValidationError}
       />
       <Button type="submit">Encrypt</Button>
       {encryptedPassword && (
