@@ -41,6 +41,6 @@ class CipherHttpRequestHandler(SimpleHTTPRequestHandler):
 
 httpRequestHandler = CipherHttpRequestHandler
 
-PORT = 8000
+PORT = 80
 server = socketserver.TCPServer(('', PORT), httpRequestHandler)
 server.serve_forever()
