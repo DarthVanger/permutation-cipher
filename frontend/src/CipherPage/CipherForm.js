@@ -9,24 +9,33 @@ const CipherForm = () => {
   const [encryptionKey, setEncryptionKey] = useState('');
   const [encryptedPassword, setEncryptedPassword] = useState(null);
   const [encryptionRequestFailed, setEncryptionRequestFailed] = useState(false);
-  const [passwordValidationError, setPasswordValidationError] = useState(null);
-  const [encryptionKeyValidationError, setEncryptionKeyValidationError] = useState(null);
+  const [passwordValidationError, setPasswordValidationError] = useState('');
+  const [encryptionKeyValidationError, setEncryptionKeyValidationError] = useState('');
   const [wasFormSubmitted, setWasFormSubmitted] = useState(false);
+
+  const validatePassword = (password) => {
+    if (password === '') {
+      return 'Please enter password';
+    }
+    if (!/^[a-zA-Z]+$/.test(password)) {
+      return 'Password should contain only letters of the alphabet';
+    }
+  };
+
+  const validateEncryptionKey = (encryptionKey) => {
+    if (encryptionKey === '') {
+      return 'Please enter encryption key';
+    }
+    if (!/^[a-zA-Z]+$/.test(encryptionKey)) {
+      return 'Encryption key should contain only letters of the alphabet';
+    }
+  };
 
   const validateForm = () => {
     if (!wasFormSubmitted) return;
 
-    if (password === '') {
-      setPasswordValidationError('Please enter password');
-    } else {
-      setPasswordValidationError(null);
-    }
-
-    if (encryptionKey === '') {
-      setEncryptionKeyValidationError('Please enter encryption key');
-    } else {
-      setEncryptionKeyValidationError(null);
-    }
+    setPasswordValidationError(validatePassword(password));
+    setEncryptionKeyValidationError(validateEncryptionKey(encryptionKey));
   };
 
   useEffect(() => {

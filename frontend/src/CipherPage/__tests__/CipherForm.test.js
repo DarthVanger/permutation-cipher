@@ -47,6 +47,40 @@ test('when encryption key is empty shows validation error', async () => {
   expect(await screen.findByRole('alert')).toHaveTextContent('Please enter encryption key');
 });
 
+test('when password contains numbers or special symbols shows validation error ', async () => {
+  const validationMessage = 'Password should contain only letters of the alphabet';
+
+  render(<CipherForm />)
+
+  enterEncryptionKey('xyz');
+  enterPassword('123asd');
+  submitForm();
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(validationMessage);
+
+  enterPassword('$asd');
+  submitForm();
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(validationMessage);
+});
+
+test('when encryption key contains numbers or special symbols shows validation error ', async () => {
+  const validationMessage = 'Encryption key should contain only letters of the alphabet';
+
+  render(<CipherForm />)
+
+  enterPassword('asd');
+  enterEncryptionKey('123xyz');
+  submitForm();
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(validationMessage);
+
+  enterEncryptionKey('^xyz');
+  submitForm();
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(validationMessage);
+});
+
 test('when the form is valid shows ecnrypted password', async () => {
   render(<CipherForm />)
 
