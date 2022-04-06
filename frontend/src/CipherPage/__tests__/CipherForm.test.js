@@ -8,7 +8,7 @@ import CipherForm from '../CipherForm'
 const mockEncryptedPassword = 'mock-encrypted-password';
 
 const server = setupServer(
-  rest.post('/encrypt-password', (req, res, ctx) => {
+  rest.post('http://localhost:8000/encrypt-password', (req, res, ctx) => {
     return res(ctx.json(mockEncryptedPassword))
   }),
 )
@@ -35,7 +35,7 @@ test('when password is empty shows validation error', async () => {
   enterEncryptionKey('xyz');
   submitForm();
 
-  expect(screen.getByRole('alert')).toHaveTextContent('Please enter password')
+  expect(await screen.findByRole('alert')).toHaveTextContent('Please enter password');
 });
 
 test('when encryption key is empty shows validation error', async () => {
@@ -44,7 +44,7 @@ test('when encryption key is empty shows validation error', async () => {
   enterPassword('abc');
   submitForm();
 
-  expect(screen.getByRole('alert')).toHaveTextContent('Please enter encryption key')
+  expect(await screen.findByRole('alert')).toHaveTextContent('Please enter encryption key');
 });
 
 test('when the form is valid shows ecnrypted password', async () => {
