@@ -68,10 +68,10 @@ const CipherForm = () => {
         <div role="alert" className="request-failed-message">Request failed. Please try again later.</div>
       )}
       {encryptedPassword && (
-        <>
+        <div className="encrypted-password-block">
           <h2>Encrypted Password</h2>
-          <div>{encryptedPassword}</div>
-        </>
+          <div className="encrypted-password">{encryptedPassword}</div>
+        </div>
       )}
     </form>
   );
