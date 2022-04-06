@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './CipherForm.css';
 import TextField from './TextField';
 import Button from './Button';
@@ -17,6 +17,8 @@ const CipherForm = () => {
     encryptionKey,
   });
 
+  const isFormValid = !passwordValidationError && !encryptionKeyValidationError;
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -27,16 +29,17 @@ const CipherForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setWasFormSubmitted(true);
     setEncryptionRequestFailed(false);
+
+    if (!isFormValid) return;
+
     try {
       const response = await encryptPasswordRequest(password, encryptionKey)
       setEncryptedPassword(response);
     } catch (error) {
       setEncryptionRequestFailed(true);
     }
-
-    setWasFormSubmitted(true);
   };
 
   return (
@@ -56,6 +59,9 @@ const CipherForm = () => {
         error={wasFormSubmitted && encryptionKeyValidationError}
       />
       <Button type="submit">Encrypt</Button>
+      {encryptionRequestFailed && (
+        <div role="alert" className="request-failed-message">Request failed. Please try again later.</div>
+      )}
       {encryptedPassword && (
         <>
           <h2>Encrypted Password</h2>

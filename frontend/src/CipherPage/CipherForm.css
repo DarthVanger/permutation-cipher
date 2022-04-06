@@ -2,3 +2,7 @@
   max-width: 600px;
   margin: auto;
 }
+.request-failed-message {
+  margin: 1em;
+  color: red;
+}
