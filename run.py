@@ -2,6 +2,11 @@ from http.server import SimpleHTTPRequestHandler
 import socketserver
 import json
 from PermutationCipherServer.crypto import permutation_encrypt
+import os
+
+# Serve static files from the 'build/' dir (https://stackoverflow.com/a/39801780/1657101)
+static_files_dir = os.path.join(os.path.dirname(__file__), 'build')
+os.chdir(static_files_dir)
 
 allowed_origin = 'http://localhost:3000'
 
