@@ -1,4 +1,3 @@
-// __tests__/fetch.test.js
 import React from 'react'
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
@@ -9,7 +8,7 @@ import CipherForm from '../CipherForm'
 const mockEncryptedPassword = 'mock-encrypted-password';
 
 const server = setupServer(
-  rest.post('/encrypt', (req, res, ctx) => {
+  rest.post('/encrypt-password', (req, res, ctx) => {
     return res(ctx.json(mockEncryptedPassword))
   }),
 )
