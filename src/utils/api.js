@@ -1,6 +1,6 @@
 const serverUrl = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000';
 
-const makeRequest = async (url, options) => {
+export const makeRequest = async (url, options) => {
   const fullUrl = `${serverUrl}${url}`;
   const response = await fetch(fullUrl, {
     headers: {
@@ -15,13 +15,4 @@ const makeRequest = async (url, options) => {
   }
 
   return response.json();
-};
-
-export const encryptPasswordRequest = async (password, encryptionKey) => {
-  const url = '/encrypt-password';
-  const response = await makeRequest(url, {
-    method: 'POST',
-    body: JSON.stringify({ password, encryptionKey }),
-  });
-  return response;
 };

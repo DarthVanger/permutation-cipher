@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import TextField from '../../components/TextField';
 import Button from '../../components/Button';
-import { encryptPasswordRequest } from '../../utils/api';
+import { encryptPasswordRequest } from './CipherFormApi';
 import { validatePassword, validateEncryptionKey } from './cipherFormValidators';
 import { saveCipherFormState, loadCipherFormState } from './cipherFormLocalStorage';
 import './CipherForm.css';
