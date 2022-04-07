@@ -10,6 +10,7 @@ const CipherForm = () => {
   const [password, setPassword] = useState('');
   const [encryptionKey, setEncryptionKey] = useState('');
   const [encryptedPassword, setEncryptedPassword] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [encryptionRequestFailed, setEncryptionRequestFailed] = useState(false);
   const [wasFormSubmitted, setWasFormSubmitted] = useState(false);
 
@@ -64,11 +65,15 @@ const CipherForm = () => {
 
     if (!isFormValid) return;
 
+    setIsLoading(true);
     try {
       const response = await encryptPasswordRequest(password, encryptionKey)
       setEncryptedPassword(response);
     } catch (error) {
       setEncryptionRequestFailed(true);
+      setEncryptedPassword(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,7 +93,9 @@ const CipherForm = () => {
         value={encryptionKey}
         error={wasFormSubmitted && encryptionKeyValidationError}
       />
-      <Button type="submit">Encrypt</Button>
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Encrypt'}
+      </Button>
       {encryptionRequestFailed && (
         <div role="alert" className="request-failed-message">Request failed. Please try again later.</div>
       )}
