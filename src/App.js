@@ -1,4 +1,4 @@
-import CipherPage from './CipherPage/CipherPage';
+import CipherPage from './pages/CipherPage/CipherPage';
 
 function App() {
   return (
