@@ -9,7 +9,8 @@ def start_server(port, static_files_dir):
     # Serve static files from another dir (https://stackoverflow.com/a/39801780/1657101)
     os.chdir(static_files_dir)
 
-    allowed_origin = 'http://localhost:3000'
+    is_dev_environment = os.environ.get('DEVELOPMENT')
+    webpack_dev_server_origin = 'http://localhost:3000'
 
     class CipherHttpRequestHandler(SimpleHTTPRequestHandler):
         def send_internal_error(self):
@@ -32,7 +33,8 @@ def start_server(port, static_files_dir):
 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
-                self.send_header('Access-Control-Allow-Origin', allowed_origin)
+                if is_dev_environment:
+                    self.send_header('Access-Control-Allow-Origin', webpack_dev_server_origin)
                 self.end_headers()
 
                 self.wfile.write(bytes(json.dumps(encrypted_password), 'utf8'))
@@ -47,10 +49,12 @@ def start_server(port, static_files_dir):
             self.send_not_found()
 
         # Enable CORS for local development with webpack dev server.
-        # Not sure about security :)
         def do_OPTIONS(self):
+            if not is_dev_environment:
+                return self.send_internal_error
+
             self.send_response(200, 'ok')
-            self.send_header('Access-Control-Allow-Origin', allowed_origin)
+            self.send_header('Access-Control-Allow-Origin', webpack_dev_server_origin)
             self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
             self.send_header('Access-Control-Allow-Headers', 'X-Requested-With')
             self.send_header('Access-Control-Allow-Headers', 'Content-Type')

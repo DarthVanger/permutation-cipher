@@ -13,6 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "prestart": "DEVELOPMENT=1 python3 run.py &",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
