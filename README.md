@@ -3,3 +3,15 @@
 https://permutation-cipher.herokuapp.com/
 
 ![App screenshot](app-screenshot.png?raw=true "Title")
+
+## Running locally
+Start server:
+```
+DEVELOPMENT=1 python3 run.py
+```
+`DEVELOPMENT=1` enables CORS on the server to work properly with webpack dev server.
+
+Start frontend:
+```
+npm start
+```
