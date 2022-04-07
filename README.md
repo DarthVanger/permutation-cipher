@@ -15,3 +15,14 @@ Start frontend:
 ```
 npm start
 ```
+
+## Running tests
+Server:
+```
+python3 PermutationCipherServer/test_crypto.py
+```
+
+Frontend:
+```
+npm t
+```
