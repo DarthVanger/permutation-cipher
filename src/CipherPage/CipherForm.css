@@ -2,12 +2,17 @@
   max-width: 600px;
   margin: auto;
 }
+.cipher-form button[type="submit"] {
+  display: block;
+  margin: auto;
+}
 .request-failed-message {
   margin: 1em;
   color: red;
 }
 .encrypted-password-block {
   margin-top: 4em;
+  text-align: center;
 }
 .encrypted-password {
   font-size: 2em;

@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import './CipherForm.css';
 import TextField from './TextField';
 import Button from './Button';
 import { encryptPasswordRequest } from './api';
 import { validatePassword, validateEncryptionKey } from './cipherFormValidators';
 import { saveCipherFormState, loadCipherFormState } from './cipherFormLocalStorage';
+import './CipherForm.css';
 
 const CipherForm = () => {
   const [password, setPassword] = useState('');
