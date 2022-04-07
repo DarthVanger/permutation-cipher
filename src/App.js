@@ -1,4 +1,3 @@
-import './App.css';
 import CipherPage from './CipherPage/CipherPage';
 
 function App() {
